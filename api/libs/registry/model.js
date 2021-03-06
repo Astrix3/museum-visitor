@@ -19,26 +19,26 @@ const fetchRecords = async (query) => {
                 }
                 else {
                     result.status = constants.STATUS.MISSING;
-                    result.error = constants.ERROR.MISSING_ERROR;
+                    result.error = constants.ERROR.NO_RECORD;
                 }
             }
             else {
                 result.status = constants.STATUS.MISSING;
-                result.error = constants.ERROR.MISSING_ERROR;
+                result.error = constants.ERROR.NO_RECORD;
             }
             return result;
         })
         .catch ((error) => {
-            console.log('------api error------', JSON.stringify(error));
-            return {
+            console.log('------api error------', error);
+            throw ({
                 status : constants.STATUS.INVALID,
-                error : error
-            };
+                message : error
+            });
         });
     } catch (error) {
         response = {
-            status : constants.STATUS.FAILURE,
-            error : error
+            status : error.hasOwnProperty('status') ? error.status : constants.STATUS.FAILURE,
+            error : error.hasOwnProperty('message')? error.message : error
         };
     }
     finally {
@@ -49,61 +49,41 @@ const fetchRecords = async (query) => {
 };
 
 const formatResponse = (request, data) => {
+    let response = {
+        status: constants.STATUS.SUCCESS,
+        data: {}
+    };
     try {
-        let response = {
-            status: constants.STATUS.SUCCESS,
-            data: {}
-        };
-
-        const records = []
-        data.forEach(record => {
+        const records = data.map(record => {
             const date = new Date(record.month);
             const month = date.toLocaleString('default', { month: constants.MONTH_STYLE });
             const year = date.getFullYear();
-    
-            if (request.hasOwnProperty(constants.QUERY.MUSEUM)) {
-                records.push({
+            if (Object.keys(record).includes(request.museum)) {
+                return {
                     month,
                     year,
                     museum : request.museum,
                     visitors : record[request.museum]
-                });
+                };
             }
-            else {
-                const recordKeys = Object.keys(record);
-                let museums = [];
-                if(!recordKeys.includes(constants.API.QUERY_PARAMETERS.MONTH)) {
-                    museums = recordKeys;
-                }
-                else {
-                    museums = recordKeys.splice(recordKeys.indexOf(constants.API.QUERY_PARAMETERS.MONTH), 1);
-                }
-                console.log('----------recordKeys----------', recordKeys);
-                console.log('----------museums----------', museums);
-                museums.forEach(museum => {
-                    records.push({
-                        month,
-                        year,
-                        museum : museum,
-                        visitors : record[museum]
-                    });
-                })
-            }
-        });
-        console.log('---------------records--------------', records.le);
-        if(records.lenght <= 0) {
+        })
+        .filter(item => item !== undefined && item !== null);
+
+        if(records.length <= 0) {
             response.status = constants.STATUS.MISSING;
-            response.error = constants.ERROR.MISSING_ERROR;
+            response.error = constants.ERROR.NO_RECORD;
         }
         else {
             response.data.result = (records.length === 1) ? records[0] : records;
         }
         return response;
     } catch (error) {
-        return {
-            status: constants.STATUS.FAILURE,
-            error: error
-        }
+        response.status = constants.STATUS.FAILURE,
+        response.error = error
+    }
+    finally{
+        console.log('---------------formatResponse---------------', response);
+        return response;
     }
 };
 

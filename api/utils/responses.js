@@ -6,6 +6,7 @@ const headers = {
   "Access-Control-Allow-*": "*",
   "Access-Control-Allow-Headers": "*",
   "node-cache": "Missed node-cache",
+  "Content-Type": "application/json"
 };
 
 module.exports.success = (body) => {

@@ -12,7 +12,7 @@ const handle = async (event, context) => {
             query: event.queryStringParameters || {}
         };
 
-        console.log("validate-in", params);
+        console.log("-----validate-in-----", params);
         result = await validate.in(params);
         if (result.status !== constants.STATUS.SUCCESS) {
             throw ({
@@ -20,9 +20,9 @@ const handle = async (event, context) => {
                 message: result.error
             });
         }
-        console.log("model-in", result);
+        console.log("-----model-in-----", result);
         result = await model(result.request);
-        console.log("model-out", result);
+        console.log("-----model-out-----", result);
         if (result.status !== constants.STATUS.SUCCESS) {
             throw ({
                 status: result.status,
@@ -30,7 +30,7 @@ const handle = async (event, context) => {
             });
         }
         result = await validate.out(result);
-        console.log("validate-out", result);
+        console.log("-----validate-out-----", result);
         if (result.status !== constants.STATUS.SUCCESS) {
             throw ({
                 status: result.status,
@@ -40,7 +40,7 @@ const handle = async (event, context) => {
         return responses.success(result.data);
 
     } catch (error) {
-        console.log("catch block ", error);
+        console.log("-----error----", error);
         if (error.status === constants.STATUS.MISSING) {
             return responses.missing(error.message);
         }
@@ -55,7 +55,6 @@ const handle = async (event, context) => {
 
 module.exports.list = async (event, context, callback) => {
     try {
-        
         return await handle(event, context);
     }
     catch (error) {
@@ -63,14 +62,3 @@ module.exports.list = async (event, context, callback) => {
         return responses.failure(error);
     }
 };
-
-const main = async() => {
-    let a = await handle({
-        queryStringParameters: {
-            'date': 1388534400000,
-        }
-    });
-    console.log('----------Final Result----------', a);
-};
-
-main();

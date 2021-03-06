@@ -8,9 +8,9 @@ const statusType  = {
 };
 
 const error = {
-    MISSING_ERROR : 'no record found',
-    INVALID_DATE : 'invalid [date]',
-    INVALID_MUSEUM : 'invalid [museum]'
+    NO_RECORD : 'no record found',
+    INVALID_DATA : (item) => `invalid value of [${item}] received`,
+    MISSING_DATA : (item) => `missing [${item}] parameter from request`,
 };
 
 const queryStringParameters = {
