@@ -2,7 +2,7 @@
 const constants = require("../../utils/constants");
 
 // Convert any input to int and checks if it is a number
-const isNumber = (item) => Number.isInteger(parseInt(item, 10));
+const isNumber = (item) => Number.isInteger(parseInt(item, 10)) && !isNaN(item);
 
 // Checks if input is a string
 const isString = (item) => typeof(item) === "string";

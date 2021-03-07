@@ -22,7 +22,14 @@ const statusType  = {
 
 const error = {
     NO_RECORD : 'no record found',
-    INVALID_DATA : (item) => `invalid value of [${item}] received`,
+    INVALID_DATA : (item) => {
+        let message= `invalid [${item}] format received.`;
+        if (item === queryStringParameters.DATE) {
+            message += ' Expected format: epoch timestamp [0-9] in milliseconds. eg: 1388534400000';
+        }
+        return message
+        
+    },
     MISSING_DATA : (item) => `missing [${item}] parameter from request`,
 };
 
