@@ -1,3 +1,5 @@
+const noRecordDate = '2013-01-01T00:00:00.000Z'
+
 const isoDate = '2014-01-01T00:00:00.000Z';
 
 const request = {
@@ -14,7 +16,7 @@ const response = {
     }
 }
 
-
+module.exports.ISO_DATE_WITH_NO_RECORDS = noRecordDate;
 module.exports.ISO_DATE = isoDate;
 module.exports.REQUEST = request;
 module.exports.RESPONSE = response;

@@ -1,7 +1,7 @@
 
-const validate = require('../libs/registry/validate');
-const apiconstants = require('./config/constants');
-const constants = require('../utils/constants');
+const validate = require('../../../../libs/registry/validate');
+const apiconstants = require('../../../config/constants');
+const constants = require('../../../../utils/constants');
 
 describe('Validate Input', () => {
     test('Should result in successful validation of input parameters', () => {

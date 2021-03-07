@@ -17,7 +17,7 @@ const statusType  = {
     SUCCESS: 'success',
     FAILURE: 'failure',
     INVALID: 'invalid',
-    MISSING: 'MISSING'
+    MISSING: 'missing'
 };
 
 const error = {
