@@ -69,6 +69,19 @@ describe('Validate Input', () => {
         expect(validate.in(info)).toMatchObject(error);
     });
 
+    test('Date Format [DD-MM-YYYY]: Should result in unsuccessful validation, with exception invalid date', () => {
+        const info = {
+            query: {
+                date: '07-03-2021'
+            }
+        }
+        const error = {
+            status: constants.STATUS.INVALID,
+            error: constants.ERROR.INVALID_DATA(constants.QUERY.DATE)
+        }    
+        expect(validate.in(info)).toMatchObject(error);
+    });
+
     test('If info is undefined should failed with status failure', () => {
         const info = undefined;
         const result = {
