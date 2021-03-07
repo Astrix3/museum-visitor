@@ -45,11 +45,13 @@ paths:
                 $ref: '#/components/schemas/inline_response_400'
               examples:
                 "0":
-                  value: '{"error":"invalid value of [date] received"}'
+                  value: '{"error":"invalid [museum] format received."}'
                 "1":
                   value: '{"error":"missing [museum] parameter from request"}'
                 "2":
                   value: '{"error":"missing [date] parameter from request"}'
+                "3":
+                  value: '{"error":"invalid [date] format received. Expected format: epoch timestamp [0-9] in milliseconds. eg: 1388534400000"}'
         "404":
           description: Auto generated using Swagger Inspector
           content:
@@ -58,8 +60,6 @@ paths:
                 $ref: '#/components/schemas/inline_response_400'
               examples:
                 "0":
-                  value: '{"error":"no record found"}'
-                "1":
                   value: '{"error":"no record found"}'
       servers:
       - url: http://localhost:3000
