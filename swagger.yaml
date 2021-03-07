@@ -1,0 +1,88 @@
+
+openapi: 3.0.1
+info:
+  title: defaultTitle
+  description: defaultDescription
+  version: "0.1"
+servers:
+- url: http://localhost:3000
+paths:
+  /api/visitors:
+    get:
+      description: Auto generated using Swagger Inspector
+      parameters:
+      - name: date
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: "1388534400000"
+      - name: museum
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+        example: avila_adobe
+      responses:
+        "200":
+          description: Auto generated using Swagger Inspector
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+              examples:
+                "0":
+                  value: '{"result":{"month":"January","year":2014,"museum":"avila_adobe","visitors":"24778"}}'
+        "400":
+          description: Auto generated using Swagger Inspector
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+              examples:
+                "0":
+                  value: '{"error":"invalid value of [date] received"}'
+                "1":
+                  value: '{"error":"missing [museum] parameter from request"}'
+                "2":
+                  value: '{"error":"missing [date] parameter from request"}'
+        "404":
+          description: Auto generated using Swagger Inspector
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+              examples:
+                "0":
+                  value: '{"error":"no record found"}'
+                "1":
+                  value: '{"error":"no record found"}'
+      servers:
+      - url: http://localhost:3000
+    servers:
+    - url: http://localhost:3000
+components:
+  schemas:
+    inline_response_200:
+      type: object
+      properties:
+        result:
+          type: object
+          properties:
+            visitors:
+              type: string
+            month:
+              type: string
+            museum:
+              type: string
+            year:
+              type: integer
+    inline_response_400:
+      type: object
+      properties:
+        error:
+          type: string

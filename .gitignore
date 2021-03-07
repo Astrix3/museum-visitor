@@ -1,0 +1,12 @@
+# package directories
+**/node_modules/
+
+# Jest directories
+**/coverage/
+
+# Serverless directories
+**/.serverless/
+
+# Temporary environments
+**/.env
+**/*~
