@@ -1,15 +1,21 @@
 "use strict";
 const constants = require("../../utils/constants");
 
+// Convert any input to int and checks if it is a number
 const isNumber = (item) => Number.isInteger(parseInt(item, 10));
+
+// Checks if input is a string
 const isString = (item) => typeof(item) === "string";
 
-const _in = async (info) => {
+// Validate Input parameters.
+const _in = (info) => {
     let response = {
         status: constants.STATUS.SUCCESS,
         request: {}
     };
     try {
+        // checks for date in query and if date is a valid number
+        // checks for date in query and if not found throws error
         if(info.query.hasOwnProperty(constants.QUERY.DATE) && isNumber(info.query.date)){
             const date = new Date(parseInt(info.query.date, 10));
             response.request.month = date.toISOString();
@@ -17,29 +23,31 @@ const _in = async (info) => {
         else if (!info.query.hasOwnProperty(constants.QUERY.DATE)){
             throw ({
                 status: constants.STATUS.INVALID,
-                error: constants.ERROR.MISSING_DATA(constants.QUERY.DATE)
+                message: constants.ERROR.MISSING_DATA(constants.QUERY.DATE)
             });
         }
         else {
             throw ({
                 status: constants.STATUS.INVALID,
-                error: constants.ERROR.INVALID_DATA(constants.QUERY.DATE)
+                message: constants.ERROR.INVALID_DATA(constants.QUERY.DATE)
             });
         }
-
+        
+        // checks for museum in query and if date is string
+        // checks for museum in query and if not found throws error
         if(info.query.hasOwnProperty(constants.QUERY.MUSEUM) && isString(info.query.museum)){
             response.request.museum = info.query.museum;
         }
-        else if (!info.query.hasOwnProperty(constants.QUERY.MUSEUM)){
+        else if (!info.query.hasOwnProperty(constants.QUERY.MUSEUM)){  
             throw ({
                 status: constants.STATUS.INVALID,
-                error: constants.ERROR.MISSING_DATA(constants.QUERY.MUSEUM)
+                message: constants.ERROR.MISSING_DATA(constants.QUERY.MUSEUM)
             });
         }
         else {
             throw ({
                 status: constants.STATUS.INVALID,
-                error: constants.ERROR.INVALID_DATA(constants.QUERY.MUSEUM)
+                message: constants.ERROR.INVALID_DATA(constants.QUERY.MUSEUM)
             });
         }
     }
@@ -55,6 +63,8 @@ const _in = async (info) => {
     }
 };
 
+// Validate Output parameters.
+// Nothing much to see here :)...
 const out = (info) => {
     try {
         const data = {

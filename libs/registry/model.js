@@ -2,6 +2,7 @@
 const axios = require("axios");
 const constants = require("../../utils/constants");
 
+// Fetch records form lAC Api endpoint
 const fetchRecords = async (query) => {
     let response = {};
     try {
@@ -48,6 +49,7 @@ const fetchRecords = async (query) => {
     
 };
 
+// Format the records in the {month, year, museum, vistor} format
 const formatResponse = (request, data) => {
     let response = {
         status: constants.STATUS.SUCCESS,
@@ -86,6 +88,7 @@ const formatResponse = (request, data) => {
         return response;
     }
 };
+
 
 const dispatch = async(request) => {
     const result = await fetchRecords(request);

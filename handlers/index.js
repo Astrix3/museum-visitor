@@ -11,8 +11,10 @@ const handle = async (event, context) => {
         let params = {
             query: event.queryStringParameters || {}
         };
-
-        result = await validate.in(params);
+        
+        // Validate query parameters
+        
+        result = validate.in(params);
         if (result.status !== constants.STATUS.SUCCESS) {
             throw ({
                 status: result.status,
@@ -20,6 +22,7 @@ const handle = async (event, context) => {
             });
         }
 
+        // Filtered request parameters are passed to model for data fetching and processing
         result = await model(result.request);
 
         if (result.status !== constants.STATUS.SUCCESS) {
@@ -28,7 +31,9 @@ const handle = async (event, context) => {
                 message: result.error
             });
         }
-        result = await validate.out(result);
+
+        // Validating response
+        result = validate.out(result);
 
         if (result.status !== constants.STATUS.SUCCESS) {
             throw ({
