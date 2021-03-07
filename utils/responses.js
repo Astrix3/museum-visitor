@@ -1,13 +1,6 @@
 "use strict";
 
-const headers = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Credentials": true,
-  "Access-Control-Allow-*": "*",
-  "Access-Control-Allow-Headers": "*",
-  "node-cache": "Missed node-cache",
-  "Content-Type": "application/json"
-};
+const headers = require('./constants').HEADERS;
 
 module.exports.success = (body) => {
   return {
@@ -47,3 +40,12 @@ module.exports.failure = (error) => {
   };
 };
 
+module.exports.forbidden = () => {
+  return {
+    statusCode : 403,
+    headers : headers,
+    body : JSON.stringify({
+      message: "Forbidden"
+    })
+  };
+}

@@ -5,7 +5,7 @@ const constants = require("../../utils/constants");
 const fetchRecords = async (query) => {
     let response = {};
     try {
-        let uri = 'https://data.lacity.org/resource/trxm-jn3c.json';
+        let uri = process.env.MUSEUM_URL;
         if (query.hasOwnProperty(constants.API.QUERY_PARAMETERS.MONTH) && query.month) {
             uri += `?month=${query.month.slice(0, -1)}`;
         }

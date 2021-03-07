@@ -1,7 +1,7 @@
 "use strict";
 const constants = require("../../utils/constants");
 
-const isNumber = (item) => Number.isInteger(item);
+const isNumber = (item) => Number.isInteger(parseInt(item, 10));
 const isString = (item) => typeof(item) === "string";
 
 const _in = async (info) => {
@@ -11,7 +11,7 @@ const _in = async (info) => {
     };
     try {
         if(info.query.hasOwnProperty(constants.QUERY.DATE) && isNumber(info.query.date)){
-            const date = new Date(info.query.date);
+            const date = new Date(parseInt(info.query.date, 10));
             response.request.month = date.toISOString();
         }
         else if (!info.query.hasOwnProperty(constants.QUERY.DATE)){
